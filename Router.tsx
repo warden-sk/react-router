@@ -2,7 +2,7 @@
  * Copyright 2021 Marek Kobida
  */
 
-import R from '../Router';
+import R from '@warden-sk/router/Router';
 import React from 'react';
 import RouterContext from './RouterContext';
 

@@ -3,7 +3,7 @@
  */
 
 import React from 'react';
-import Router from '../Router';
+import Router from '@warden-sk/router/Router';
 
 interface C {
   router?: Router<[(element: React.ReactNode) => any]>;
