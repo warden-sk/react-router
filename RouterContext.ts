@@ -7,7 +7,7 @@ import Router from '@warden-sk/router/Router';
 
 interface C {
   router?: Router<[]>;
-  test?: (url?: string) => boolean;
+  test?: (url: string) => any;
 }
 
 const RouterContext = React.createContext<C>({});

@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@warden-sk/helpers": "github:warden-sk/helpers#compiled",
     "@warden-sk/router": "github:warden-sk/router#compiled"
   },
   "devDependencies": {

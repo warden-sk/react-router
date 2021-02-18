@@ -10,34 +10,36 @@ interface P {
   children: React.ReactNode;
 }
 
-const router = new R().assignContext([]);
+const router = new R<[]>();
+
+router.context = [];
 
 function Router({ children }: P) {
-  const [, update] = React.useState({});
+  const [, update] = React.useState();
 
-  function test(url?: string) {
-    if (typeof url === 'string') {
-      history.pushState(null, '', `#${url}`);
-    }
-
+  function test1(url?: string) {
     if (typeof url === 'undefined') {
       url = location.hash.substring(1) || '/';
     }
 
-    const is = router.test('GET', url);
+    router.test('GET', url);
 
-    update({});
+    update(undefined);
+  }
 
-    return is;
+  function test2(url: string) {
+    history.pushState(null, '', `#${url}`);
+
+    test1(url);
   }
 
   React.useEffect(() => {
-    test();
+    test1();
 
-    window.addEventListener('popstate', () => test());
+    window.addEventListener('popstate', () => test1());
   }, []);
 
-  return <RouterContext.Provider value={{ router, test }}>{children}</RouterContext.Provider>;
+  return <RouterContext.Provider value={{ router, test: test2 }}>{children}</RouterContext.Provider>;
 }
 
 export default Router;

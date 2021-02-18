@@ -4,6 +4,7 @@
 
 import React from 'react';
 import RouterContext from './RouterContext';
+import invariant from '@warden-sk/helpers/invariant';
 
 interface P {
   children: React.ReactNode;
@@ -16,7 +17,9 @@ function Link({ children, to }: P) {
   function onClick(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
     event.preventDefault();
 
-    test?.(to);
+    invariant(test, 'The test function is not assigned.');
+
+    test(to);
   }
 
   return (
