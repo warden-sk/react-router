@@ -10,7 +10,7 @@ interface P {
   children: React.ReactNode;
 }
 
-const router = new R<[]>();
+const router = new R<[]>().assignContext([]);
 
 function test() {
   const url = location.hash.substring(1) || '/';
@@ -23,8 +23,6 @@ function Router({ children }: P) {
   const [currentUrlParameters, assignCurrentUrlParameters] = React.useState<any>();
 
   React.useEffect(() => {
-    router.assignContext([]);
-
     test();
 
     window.addEventListener('popstate', test);

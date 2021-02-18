@@ -21,7 +21,11 @@ function Link({ children, to }: P) {
     router?.test('GET', to);
   }
 
-  return <a onClick={onClick}>{children}</a>;
+  return (
+    <a href={`#${to}`} onClick={onClick}>
+      {children}
+    </a>
+  );
 }
 
 export default Link;
