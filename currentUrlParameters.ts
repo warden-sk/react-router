@@ -6,9 +6,9 @@ import React from 'react';
 import RouterContext from './RouterContext';
 
 function currentUrlParameters(): Partial<Record<string, string>> {
-  const { currentUrlParameters } = React.useContext(RouterContext);
+  const { router } = React.useContext(RouterContext);
 
-  return currentUrlParameters || {};
+  return router?.currentRoute?.currentUrlParameters || {};
 }
 
 export default currentUrlParameters;

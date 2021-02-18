@@ -12,29 +12,32 @@ interface P {
 
 const router = new R<[]>().assignContext([]);
 
-function test() {
-  const url = location.hash.substring(1) || '/';
-
-  router.test('GET', url);
-}
-
 function Router({ children }: P) {
-  const [currentRoute, assignCurrentRoute] = React.useState<any>();
-  const [currentUrlParameters, assignCurrentUrlParameters] = React.useState<any>();
+  const [, update] = React.useState({});
+
+  function test(url?: string) {
+    if (typeof url === 'string') {
+      history.pushState(null, '', `#${url}`);
+    }
+
+    if (typeof url === 'undefined') {
+      url = location.hash.substring(1) || '/';
+    }
+
+    const is = router.test('GET', url);
+
+    update({});
+
+    return is;
+  }
 
   React.useEffect(() => {
     test();
 
-    window.addEventListener('popstate', test);
+    window.addEventListener('popstate', () => test());
   }, []);
 
-  return (
-    <RouterContext.Provider
-      value={{ assignCurrentRoute, assignCurrentUrlParameters, currentRoute, currentUrlParameters, router }}
-    >
-      {children}
-    </RouterContext.Provider>
-  );
+  return <RouterContext.Provider value={{ router, test }}>{children}</RouterContext.Provider>;
 }
 
 export default Router;

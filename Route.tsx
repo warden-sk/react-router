@@ -11,18 +11,13 @@ interface P {
 }
 
 function Route({ children, url }: P) {
-  const { assignCurrentRoute, assignCurrentUrlParameters, currentRoute, router } = React.useContext(RouterContext);
+  const { router } = React.useContext(RouterContext);
 
   React.useEffect(() => {
-    const route = router?.addRoute(url);
-
-    route?.get(urlParameters => {
-      assignCurrentRoute?.(route);
-      assignCurrentUrlParameters?.(urlParameters);
-    });
+    router?.addRoute(url).get(() => {});
   }, []);
 
-  return currentRoute?.url[0] === url ? <>{children}</> : null;
+  return router?.currentRoute?.url[0] === url ? <>{children}</> : null;
 }
 
 export default Route;

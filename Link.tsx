@@ -11,14 +11,12 @@ interface P {
 }
 
 function Link({ children, to }: P) {
-  const { router } = React.useContext(RouterContext);
+  const { test } = React.useContext(RouterContext);
 
   function onClick(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
     event.preventDefault();
 
-    history.pushState(null, '', `#${to}`);
-
-    router?.test('GET', to);
+    test?.(to);
   }
 
   return (
