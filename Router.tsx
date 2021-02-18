@@ -10,7 +10,7 @@ interface P {
   children: React.ReactNode;
 }
 
-const router = new R<[(element: React.ReactNode) => any]>();
+const router = new R();
 
 function test() {
   const url = location.hash.substring(1) || '/';
@@ -19,10 +19,11 @@ function test() {
 }
 
 function Router({ children }: P) {
-  const [element, writeElement] = React.useState<React.ReactNode>();
+  const [currentRoute, assignCurrentRoute] = React.useState<any>();
+  const [currentUrlParameters, assignCurrentUrlParameters] = React.useState<any>();
 
   React.useEffect(() => {
-    router.assignContext([writeElement]);
+    router.assignContext([]);
 
     test();
 
@@ -30,9 +31,10 @@ function Router({ children }: P) {
   }, []);
 
   return (
-    <RouterContext.Provider value={{ router }}>
+    <RouterContext.Provider
+      value={{ assignCurrentRoute, assignCurrentUrlParameters, currentRoute, currentUrlParameters, router }}
+    >
       {children}
-      {element}
     </RouterContext.Provider>
   );
 }
