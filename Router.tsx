@@ -10,7 +10,7 @@ interface P {
   children: React.ReactNode;
 }
 
-const router = new R();
+const router = new R<[]>();
 
 function test() {
   const url = location.hash.substring(1) || '/';

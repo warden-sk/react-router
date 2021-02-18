@@ -5,10 +5,10 @@
 import React from 'react';
 import RouterContext from './RouterContext';
 
-function urlParameters(): Partial<Record<string, string>> {
+function currentUrlParameters(): Partial<Record<string, string>> {
   const { currentUrlParameters } = React.useContext(RouterContext);
 
   return currentUrlParameters || {};
 }
 
-export default urlParameters;
+export default currentUrlParameters;
