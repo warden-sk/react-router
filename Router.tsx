@@ -10,7 +10,7 @@ interface P {
   children: React.ReactNode;
 }
 
-const router = new R<[]>().assignContext([]);
+const router = new R().assignContext([]);
 
 function Router({ children }: P) {
   const [, update] = React.useState({});
