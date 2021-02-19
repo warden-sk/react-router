@@ -2,7 +2,7 @@
  * Copyright 2021 Marek Kobida
  */
 
-import R from '@warden-sk/router/Router';
+import { history, router } from './common';
 import React from 'react';
 import RouterContext from './RouterContext';
 
@@ -10,36 +10,18 @@ interface P {
   children: React.ReactNode;
 }
 
-const router = new R<[]>();
-
-router.context = [];
-
 function Router({ children }: P) {
   const [, update] = React.useState({});
 
-  function test1(url?: string) {
-    if (typeof url === 'undefined') {
-      url = location.hash.substring(1) || '/';
-    }
-
-    router.test('GET', url);
-
-    update({});
-  }
-
-  function test2(url: string) {
-    history.pushState(null, '', `#${url}`);
-
-    test1(url);
-  }
-
   React.useEffect(() => {
-    test1();
+    history.onRoute = () => update({});
 
-    window.addEventListener('popstate', () => test1());
+    history.route();
+
+    window.addEventListener('popstate', () => history.route());
   }, []);
 
-  return <RouterContext.Provider value={{ router, test: test2 }}>{children}</RouterContext.Provider>;
+  return <RouterContext.Provider value={{ history, router }}>{children}</RouterContext.Provider>;
 }
 
 export default Router;
