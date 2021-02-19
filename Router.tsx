@@ -15,7 +15,7 @@ const router = new R<[]>();
 router.context = [];
 
 function Router({ children }: P) {
-  const [, update] = React.useState(0);
+  const [, update] = React.useState({});
 
   function test1(url?: string) {
     if (typeof url === 'undefined') {
@@ -24,7 +24,7 @@ function Router({ children }: P) {
 
     router.test('GET', url);
 
-    update(0);
+    update({});
   }
 
   function test2(url: string) {
