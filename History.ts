@@ -2,9 +2,12 @@
  * Copyright 2021 Marek Kobida
  */
 
+import Route from '@warden-sk/router/Route';
 import Router from '@warden-sk/router/Router';
 
 class History {
+  currentRoute?: Route;
+
   onRoute?: () => any;
 
   #router: Router;
@@ -13,18 +16,26 @@ class History {
     this.#router = router;
   }
 
-  link(to: string): string {
-    return `#${to}`;
+  createLink(url: string): string {
+    return `#${url}`;
   }
 
-  route(to?: string): this {
-    if (to) {
-      history.pushState(null, '', `#${to}`);
+  currentUrl(): string {
+    return location.hash.substring(1) || '/';
+  }
+
+  currentUrlParameters(): Partial<Record<string, string>> {
+    return this.currentRoute?.readUrlParameters(this.currentUrl()) || {};
+  }
+
+  pushState(url?: string): this {
+    if (url) {
+      history.pushState(null, '', this.createLink(url));
     } else {
-      to = location.hash.substring(1) || '/';
+      url = this.currentUrl();
     }
 
-    this.#router.test('GET', to);
+    this.currentRoute = this.#router.test('GET', url);
 
     this.onRoute?.();
 

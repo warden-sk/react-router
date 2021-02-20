@@ -16,9 +16,9 @@ function Router({ children }: P) {
   React.useEffect(() => {
     history.onRoute = () => update({});
 
-    history.route();
+    history.pushState();
 
-    window.addEventListener('popstate', () => history.route());
+    window.addEventListener('popstate', () => history.pushState());
   }, []);
 
   return <RouterContext.Provider value={{ history, router }}>{children}</RouterContext.Provider>;

@@ -6,11 +6,11 @@ import History from './History';
 import React from 'react';
 import Router from '@warden-sk/router/Router';
 
-interface C {
+interface Context {
   history?: History;
   router?: Router;
 }
 
-const RouterContext = React.createContext<C>({});
+const RouterContext = React.createContext<Context>({});
 
 export default RouterContext;

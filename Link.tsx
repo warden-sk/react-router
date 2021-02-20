@@ -4,23 +4,26 @@
 
 import React from 'react';
 import RouterContext from './RouterContext';
+import invariant from '@warden-sk/helpers/invariant';
 
 interface P {
   children: React.ReactNode;
-  to: string;
+  url: string;
 }
 
-function Link({ children, to }: P) {
+function Link({ children, url }: P) {
   const { history } = React.useContext(RouterContext);
 
-  function onClick(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
+  invariant(history, 'The history is not assigned.');
+
+  const onClick = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     event.preventDefault();
 
-    history?.route(to);
-  }
+    history.pushState(url);
+  };
 
   return (
-    <a href={history?.link(to)} onClick={onClick}>
+    <a href={history.createLink(url)} onClick={onClick}>
       {children}
     </a>
   );
